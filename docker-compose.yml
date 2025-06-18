@@ -22,13 +22,12 @@ services:
 
   scraper:
   build: ./scraper
-  # mevcut env_file kalabilir veya kaldırılabilir
+  
   env_file:
     - ./scraper/.env
   environment:
     - DATABASE_URL=postgresql://user:pass@db:5432/ebsdb
-  depends_on:
-    - db
+
   volumes:
     - ./scraper:/app
     - ./config.json:/app/config.json
