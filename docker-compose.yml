@@ -1,6 +1,7 @@
 version: '3.8'
 
 services:
+
   db:
     image: postgres:15
     environment:
@@ -10,9 +11,24 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
 
+  scraper:
+    build:
+      context: ./scraper
+    env_file:
+      - ./scraper/.env
+    environment:
+      - DATABASE_URL=postgresql://user:pass@db:5432/ebsdb
+    depends_on:
+      - db
+    volumes:
+      - ./scraper:/app
+      - ./config.json:/app/config.json
+
   backend:
-    build: ./backend
-    env_file: ./backend/.env
+    build:
+      context: ./backend
+    env_file:
+      - ./backend/.env
     depends_on:
       - db
     ports:
@@ -20,25 +36,13 @@ services:
     volumes:
       - ./backend:/app
 
-  scraper:
-  build: ./scraper
-  
-  env_file:
-    - ./scraper/.env
-  environment:
-    - DATABASE_URL=postgresql://user:pass@db:5432/ebsdb
-
-  volumes:
-    - ./scraper:/app
-    - ./config.json:/app/config.json
-
-
   frontend:
-    build: ./frontend
+    build:
+      context: ./frontend
     ports:
       - "3000:3000"
     volumes:
-      - ./frontend:/app
+      - ./frontend:/app"
 
 volumes:
   pgdata:
