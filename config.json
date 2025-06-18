@@ -1,0 +1,13 @@
+{
+  "facultyFilter": "Mühendislik ve Doğa Bilimleri Fakültesi",
+  "programFilter": "Bilgisayar Mühendisliği",
+  "courseFilter": "BLM111",
+  "fields": [
+    "programOutcomeMapping",
+    "evaluation",
+    "workload",
+    "outcomes",
+    "weeklyPlan",
+    "instructors"
+  ]
+}
